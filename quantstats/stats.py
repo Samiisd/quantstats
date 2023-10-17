@@ -340,7 +340,7 @@ def sortino(returns, rf=0, periods=252, annualize=True, smart=False):
 
     returns = _utils._prepare_returns(returns, rf, periods)
 
-    downside = _np.sqrt((returns[returns < 0] ** 2).sum() / len(returns))
+    downside = _np.sqrt(_np.mean(_np.minimum(returns, 0)**2))
 
     if smart:
         # penalize sortino with auto correlation
